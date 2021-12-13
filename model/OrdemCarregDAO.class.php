@@ -16,18 +16,25 @@ class OrdemCarregDAO extends Conn {
     
     public function dados($base) {
 
-        $select = "SELECT "
-                        . " ORDCARREG_ID AS \"idOrdemCarreg\" "
-                        . " , DECODE(DEST_EXP, 'SIM', 1, 2) AS \"destExpOrdemCarreg\" "
-                        . " , TICKET AS \"ticketOrdemCarreg\" "
-                        . " , PRODUTO AS \"produtoOrdemCarreg\" "
-                        . " , CLASSIF AS \"classifOrdemCarreg\" "
-                        . " , QT_EMBAL AS \"qtdeEmbProdOrdemCarreg\" "
-                        . " , PERIODPROD_ID AS \"idPeriodProdOrdemCarreg\" "
-                        . " , EMPRUSU_ID AS \"idEmprUsuOrdemCarreg\" "
-                        . " , EMBPROD_ID AS \"idEmbProdOrdemCarreg\" "
+        $select = " SELECT "
+                        . " VOC.ORDCARREG_ID AS \"idOrdemCarreg\" "
+                        . " , DECODE(VOC.DEST_EXP, 'SIM', 1, 2) AS \"destExpOrdemCarreg\" "
+                        . " , VOC.TICKET AS \"ticketOrdemCarreg\" "
+                        . " , VOC.PRODUTO AS \"produtoOrdemCarreg\" "
+                        . " , VOC.CLASSIF AS \"classifOrdemCarreg\" "
+                        . " , VOC.QT_EMBAL AS \"qtdeEmbProdOrdemCarreg\" "
+                        . " , VOC.PERIODPROD_ID AS \"idPeriodProdOrdemCarreg\" "
+                        . " , VOC.EMPRUSU_ID AS \"idEmprUsuOrdemCarreg\" "
+                        . " , VOC.EMBPROD_ID AS \"idEmbProdOrdemCarreg\" "
                     . " FROM " 
-                        . " V_ORDEM_BAG_CARREGANDO ";
+                        . " V_ORDEM_BAG_CARREGANDO VOC "
+                    . " WHERE NOT EXISTS "
+                            . " (SELECT "
+                                    . " 1 "
+                                . " FROM "
+                                    . " LEITURA_BAG_OC LB "
+                                . " WHERE"
+                                    . " LB.ORDCARREG_ID = VOC.ORDCARREG_ID)";
         
         $this->Conn = parent::getConn($base);
         $this->Read = $this->Conn->prepare($select);

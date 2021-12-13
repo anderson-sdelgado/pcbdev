@@ -5,7 +5,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-require_once('../model/LogEnvioDAO.class.php');
 require_once('../model/CabecCarregDAO.class.php');
 require_once('../model/ItemCarregDAO.class.php');
 /**
@@ -16,13 +15,16 @@ require_once('../model/ItemCarregDAO.class.php');
 class CarregCTR {
     //put your code here
     
+    private $base = 2;
+    
     public function salvarDados($versao, $info, $pagina) {
 
         $dados = $info['dado'];
-        $this->salvarLog($dados, $pagina, $versao);
+//        echo $dados;
+//        $this->salvarLog($dados, $pagina, $versao);
         $versao = str_replace("_", ".", $versao);
 
-        if ($versao >= 2.00) {
+        if ($versao >= 1.00) {
 
             $pos1 = strpos($dados, "_") + 1;
 
@@ -47,15 +49,6 @@ class CarregCTR {
         $idCabecArray = array();
         
         foreach ($cabecDados as $cabec) {
-            if($cabec->statusCabecCarreg === 1){
-                $v = $cabecCarregDAO->verifCabec($cabec, $this->base);
-                if ($v == 0) {
-                    $cabecCarregDAO->insCabecAberto($cabec, $this->base);
-                }
-                $idCabecBD = $cabecCarregDAO->idCabec($cabec, $this->base);
-                $retApont = $this->salvarItem($idCabecBD, $cabec->idCabec, $itemDados);
-            }
-            else{
                 $v = $cabecCarregDAO->verifCabec($cabec, $this->base);
                 if ($v == 0) {
                     $cabecCarregDAO->insCabecFechado($cabec, $this->base);
@@ -63,34 +56,25 @@ class CarregCTR {
                 } else {
                     $idCabecBD = $cabecCarregDAO->idCabec($cabec, $this->base);
                     $cabecCarregDAO->updateCabecFechado($idCabecBD, $cabec, $this->base);
-                }
-                $retApont = $this->salvarItem($idCabecBD, $cabec->idCabecCarreg, $itemDados);
+                $this->salvarItem($idCabecBD, $cabec->idCabecCarreg, $itemDados);
             }
             $idCabecArray[] = array("idCabecCarreg" => $cabec->idCabecCarreg);
         }
-        
         $cabecRet = json_encode(array("cabec"=>$idCabecArray));
-        return 'RETORNO_' . $cabecRet . "|" . $retApont;
+        return 'RETORNO_' . $cabecRet;
         
     }
     
     private function salvarItem($idCabecBD, $idCabecCel, $itemDados){
-        
         $itemCarregDAO = new ItemCarregDAO;
-        $idItemArray = array();
-        
         foreach ($itemDados as $item) {
             if ($idCabecCel == $item->idCabecItemCarreg) {
                 $v = $itemCarregDAO->verifItem($idCabecBD, $item, $this->base);
                 if ($v == 0) {
                     $itemCarregDAO->insItem($idCabecBD, $item, $this->base);
                 }
-                $idCabecBD = $itemCarregDAO->idItem($idCabecBD, $item, $this->base);
-                $idItemArray[] = array("idItemCarreg" => $item->idItemCarreg);
             }
         }
-        $retItem = json_encode(array("item"=>$idItemArray));
-        return $retItem;
     }
     
 }

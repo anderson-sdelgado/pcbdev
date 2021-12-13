@@ -62,7 +62,7 @@ class BaseDadosCTR {
         
         if($versao >= 1.00){
         
-            //$atualOrdemCarregDAO->atualOrdemCarreg($this->baseApex);
+            $atualOrdemCarregDAO->atualOrdemCarreg($this->baseApex);
             $dados = array("dados"=>$ordemCarregDAO->dados($this->base));
             $json_str = json_encode($dados);
 

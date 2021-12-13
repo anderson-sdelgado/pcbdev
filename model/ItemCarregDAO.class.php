@@ -37,30 +37,6 @@ class ItemCarregDAO extends Conn {
         return $v;
     }
 
-    public function idItem($idBol, $item, $base) {
-
-        $select = " SELECT "
-                        . " LEIBGOCIT_ID AS ID "
-                    . " FROM "
-                        . " LEITURA_BAG_OC_ITEM "
-                    . " WHERE "
-                        . " CEL_ID = " . $item->idItemCarreg
-                    . " AND "
-                        . " BOLETIM_ID = " . $idBol;
-
-        $this->Conn = parent::getConn($base);
-        $this->Read = $this->Conn->prepare($select);
-        $this->Read->setFetchMode(PDO::FETCH_ASSOC);
-        $this->Read->execute();
-        $result = $this->Read->fetchAll();
-
-        foreach ($result as $item) {
-            $id = $item['ID'];
-        }
-
-        return $id;
-    }
-
     public function insItem($idCabecBD, $item, $base) {
         
         $sql = "INSERT INTO LEITURA_BAG_OC_ITEM ("

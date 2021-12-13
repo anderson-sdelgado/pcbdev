@@ -21,7 +21,6 @@ class AtualOrdemCarregDAO extends ConnAPEX {
                     . " , e_emprusu_id     => 1 )";
         $this->Conn = parent::getConn($base);
         $stmt = $this->Conn->prepare($sql);
-
         $stmt->execute();
     }
     
