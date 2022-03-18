@@ -22,14 +22,14 @@ class BagCarregDAO extends Conn {
                         . " , BC.CD_BARRA AS \"codBarraBag\" "
                         . " , BC.EMPRUSU_ID AS \"idEmprUsuBag\" "
                         . " , BC.PERIODPROD_ID AS \"idPeriodProdBag\" "
-                        . " , BC.EMBPROD_ID AS \"idEmbProdBag\" "
+                        . " , BC.DADOSPROD_ID AS \"idProdBag\" "
                     . " FROM "
                         . " V_BAG_CARREGAMENTO BC"
                         . " , V_ORDEM_BAG_CARREGANDO OC "
                     . " WHERE " 
                         . " OC.PERIODPROD_ID = BC.PERIODPROD_ID "
                         . " AND "
-                        . " OC.EMBPROD_ID = BC.EMBPROD_ID "
+                        . " OC.DADOSPROD_ID = BC.DADOSPROD_ID "
                         . " AND "
                         . " OC.EMPRUSU_ID = BC.EMPRUSU_ID ";
         

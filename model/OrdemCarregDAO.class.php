@@ -25,7 +25,7 @@ class OrdemCarregDAO extends Conn {
                         . " , VOC.QT_EMBAL AS \"qtdeEmbProdOrdemCarreg\" "
                         . " , VOC.PERIODPROD_ID AS \"idPeriodProdOrdemCarreg\" "
                         . " , VOC.EMPRUSU_ID AS \"idEmprUsuOrdemCarreg\" "
-                        . " , VOC.EMBPROD_ID AS \"idEmbProdOrdemCarreg\" "
+                        . " , VOC.DADOSPROD_ID AS \"idProdOrdemCarreg\" "
                     . " FROM " 
                         . " V_ORDEM_BAG_CARREGANDO VOC "
                     . " WHERE NOT EXISTS "
