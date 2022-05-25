@@ -11,10 +11,10 @@ require_once('../dbutil/Conn.class.php');
  *
  * @author anderson
  */
-class BagCarregDAO extends Conn {
+class BagDAO extends Conn {
     //put your code here
     
-    public function dados($base) {
+    public function dadosCarga() {
 
         $select = "SELECT DISTINCT "
                         . " BC.REGMEDPES_ID AS \"idRegMedPesBag\" "
@@ -24,8 +24,8 @@ class BagCarregDAO extends Conn {
                         . " , BC.PERIODPROD_ID AS \"idPeriodProdBag\" "
                         . " , BC.DADOSPROD_ID AS \"idProdBag\" "
                     . " FROM "
-                        . " V_BAG_CARREGAMENTO BC"
-                        . " , V_ORDEM_BAG_CARREGANDO OC "
+                        . " USINAS.V_BAG_CARREGAMENTO BC"
+                        . " , USINAS.V_ORDEM_BAG_CARREGANDO OC "
                     . " WHERE " 
                         . " OC.PERIODPROD_ID = BC.PERIODPROD_ID "
                         . " AND "
@@ -33,7 +33,28 @@ class BagCarregDAO extends Conn {
                         . " AND "
                         . " OC.EMPRUSU_ID = BC.EMPRUSU_ID ";
         
-        $this->Conn = parent::getConn($base);
+        $this->Conn = parent::getConn();
+        $this->Read = $this->Conn->prepare($select);
+        $this->Read->setFetchMode(PDO::FETCH_ASSOC);
+        $this->Read->execute();
+        $result = $this->Read->fetchAll();
+
+        return $result;
+        
+    }
+    
+    public function dadosTransf($codBarra) {
+
+        $select = "SELECT DISTINCT "
+                        . " B.REGMEDPES_ID AS \"idRegMedPesBag\" "
+                        . " , B.NRO_BAG AS \"nroBag\" "
+                        . " , B.CD_BARRA AS \"codBarraBag\" "
+                    . " FROM "
+                        . " USINAS.V_BAG_ESTOQ B "
+                    . " WHERE " 
+                        . " B.CD_BARRA LIKE '%" . $codBarra . "%'";
+        
+        $this->Conn = parent::getConn();
         $this->Read = $this->Conn->prepare($select);
         $this->Read->setFetchMode(PDO::FETCH_ASSOC);
         $this->Read->execute();

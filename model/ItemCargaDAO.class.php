@@ -11,20 +11,20 @@ require_once('../dbutil/Conn.class.php');
  *
  * @author anderson
  */
-class ItemCarregDAO extends Conn {
+class ItemCargaDAO extends Conn {
 
-    public function verifItem($idCabec, $item, $base) {
+    public function verifItem($idCabec, $item) {
 
         $select = " SELECT "
                     . " COUNT(*) AS QTDE "
                 . " FROM "
-                    . " LEITURA_BAG_OC_ITEM "
+                    . " USINAS.LEITURA_BAG_OC_ITEM "
                 . " WHERE "
-                    . " CEL_ID = " . $item->idItemCarreg
+                    . " CEL_ID = " . $item->idItemCarga
                     . " AND "
                     . " LEIBGOC_ID = " . $idCabec;
 
-        $this->Conn = parent::getConn($base);
+        $this->Conn = parent::getConn();
         $this->Read = $this->Conn->prepare($select);
         $this->Read->setFetchMode(PDO::FETCH_ASSOC);
         $this->Read->execute();
@@ -37,20 +37,20 @@ class ItemCarregDAO extends Conn {
         return $v;
     }
 
-    public function insItem($idCabecBD, $item, $base) {
+    public function insItem($idCabecBD, $item) {
         
-        $sql = "INSERT INTO LEITURA_BAG_OC_ITEM ("
+        $sql = "INSERT INTO USINAS.LEITURA_BAG_OC_ITEM ("
                 . " LEIBGOC_ID "
                 . " , REGMEDPES_ID "
                 . " , CEL_ID "
                 . " ) "
                 . " VALUES ("
                 . " " . $idCabecBD
-                . " , " . $item->idRegMedPesBagCarreg
-                . " , " . $item->idItemCarreg
+                . " , " . $item->idRegMedPesBagCarga
+                . " , " . $item->idItemCarga
                 . " )";
 
-        $this->Conn = parent::getConn($base);
+        $this->Conn = parent::getConn();
         $this->Create = $this->Conn->prepare($sql);
         $this->Create->execute();
 

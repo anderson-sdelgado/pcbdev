@@ -11,20 +11,20 @@ require_once('../dbutil/Conn.class.php');
  *
  * @author anderson
  */
-class CabecCarregDAO extends Conn {
+class CabecCargaDAO extends Conn {
 
-    public function verifCabec($cabec, $base) {
+    public function verifCabec($cabec) {
 
         $select = " SELECT "
                         . " COUNT(*) AS QTDE "
                     . " FROM "
-                        . " LEITURA_BAG_OC "
+                        . " USINAS.LEITURA_BAG_OC "
                     . " WHERE "
-                        . " DT_HR = TO_DATE('" . $cabec->dthrCabecCarreg . "','DD/MM/YYYY HH24:MI')"
+                        . " DT_HR = TO_DATE('" . $cabec->dthrCabecCarga . "','DD/MM/YYYY HH24:MI')"
                     . " AND "
-                        . " CEL_ID = " . $cabec->idCabecCarreg;
+                        . " CEL_ID = " . $cabec->idCabecCarga;
 
-        $this->Conn = parent::getConn($base);
+        $this->Conn = parent::getConn();
         $this->Read = $this->Conn->prepare($select);
         $this->Read->setFetchMode(PDO::FETCH_ASSOC);
         $this->Read->execute();
@@ -37,18 +37,18 @@ class CabecCarregDAO extends Conn {
         return $v;
     }
 
-    public function idCabec($cabec, $base) {
+    public function idCabec($cabec) {
 
         $select = " SELECT "
                         . " LEIBGOC_ID AS ID "
                     . " FROM "
-                        . " LEITURA_BAG_OC "
+                        . " USINAS.LEITURA_BAG_OC "
                     . " WHERE "
-                        . " DT_HR = TO_DATE('" . $cabec->dthrCabecCarreg . "','DD/MM/YYYY HH24:MI')"
+                        . " DT_HR = TO_DATE('" . $cabec->dthrCabecCarga . "','DD/MM/YYYY HH24:MI')"
                     . " AND "
-                        . " CEL_ID = " . $cabec->idCabecCarreg;
+                        . " CEL_ID = " . $cabec->idCabecCarga;
 
-        $this->Conn = parent::getConn($base);
+        $this->Conn = parent::getConn();
         $this->Read = $this->Conn->prepare($select);
         $this->Read->setFetchMode(PDO::FETCH_ASSOC);
         $this->Read->execute();
@@ -61,9 +61,9 @@ class CabecCarregDAO extends Conn {
         return $id;
     }
 
-    public function insCabecAberto($cabec, $base) {
+    public function insCabecAberto($cabec) {
 
-        $sql = "INSERT INTO LEITURA_BAG_OC ("
+        $sql = "INSERT INTO USINAS.LEITURA_BAG_OC ("
                     . " ORDCARREG_ID "
                     . " , FUNC_ID "
                     . " , DT_HR "
@@ -71,21 +71,21 @@ class CabecCarregDAO extends Conn {
                     . " , STATUS "
                     . " ) "
                     . " VALUES ("
-                    . " " . $cabec->idOrdemCabecCarreg
-                    . " , " . $cabec->idFuncCabecCarreg
-                    . " , TO_DATE('" . $cabec->dthrCabecCarreg . "','DD/MM/YYYY HH24:MI')"
-                    . " , " . $cabec->idCabecCarreg
+                    . " " . $cabec->idOrdemCabecCarga
+                    . " , " . $cabec->idFuncCabecCarga
+                    . " , TO_DATE('" . $cabec->dthrCabecCarga . "','DD/MM/YYYY HH24:MI')"
+                    . " , " . $cabec->idCabecCarga
                     . " , 1 "
                     . " )";
 
-        $this->Conn = parent::getConn($base);
+        $this->Conn = parent::getConn();
         $this->Create = $this->Conn->prepare($sql);
         $this->Create->execute();
     }
 
-    public function insCabecFechado($cabec, $base) {
+    public function insCabecFechado($cabec) {
 
-        $sql = "INSERT INTO LEITURA_BAG_OC ("
+        $sql = "INSERT INTO USINAS.LEITURA_BAG_OC ("
                     . " ORDCARREG_ID "
                     . " , FUNC_ID "
                     . " , DT_HR "
@@ -93,27 +93,27 @@ class CabecCarregDAO extends Conn {
                     . " , STATUS "
                     . " ) "
                     . " VALUES ("
-                    . " " . $cabec->idOrdemCabecCarreg
-                    . " , " . $cabec->idFuncCabecCarreg
-                    . " , TO_DATE('" . $cabec->dthrCabecCarreg . "','DD/MM/YYYY HH24:MI')"
-                    . " , " . $cabec->idCabecCarreg
+                    . " " . $cabec->idOrdemCabecCarga
+                    . " , " . $cabec->idFuncCabecCarga
+                    . " , TO_DATE('" . $cabec->dthrCabecCarga . "','DD/MM/YYYY HH24:MI')"
+                    . " , " . $cabec->idCabecCarga
                     . " , 2 "
                     . " )";
 
-        $this->Conn = parent::getConn($base);
+        $this->Conn = parent::getConn();
         $this->Create = $this->Conn->prepare($sql);
         $this->Create->execute();
     }
 
-    public function updateCabecFechado($idCabecBD, $cabec, $base) {
+    public function updateCabecFechado($idCabecBD) {
 
-        $sql = "UPDATE LEITURA_BAG_OC "
+        $sql = "UPDATE USINAS.LEITURA_BAG_OC "
                     . " SET "
                     . " STATUS = 2 "
                     . " WHERE "
                     . " LEIBGOC_ID = " . $idCabecBD;
 
-        $this->Conn = parent::getConn($base);
+        $this->Conn = parent::getConn();
         $this->Create = $this->Conn->prepare($sql);
         $this->Create->execute();
     }

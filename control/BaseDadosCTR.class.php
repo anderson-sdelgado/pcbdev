@@ -5,70 +5,61 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-require_once('../model/AtualOrdemCarregDAO.class.php');
-require_once('../model/BagCarregDAO.class.php');
+require_once('../model/AtualOrdemCargaDAO.class.php');
+require_once('../model/BagDAO.class.php');
 require_once('../model/FuncDAO.class.php');
-require_once('../model/OrdemCarregDAO.class.php');
+require_once('../model/OrdemCargaDAO.class.php');
 /**
  * Description of BaseDadosCTR
  *
  * @author anderson
  */
 class BaseDadosCTR {
-    //put your code here
-    private $base = 2;
-    private $baseApex = 3;
 
-    public function dadosBag($versao) {
-        
-        $versao = str_replace("_", ".", $versao);
-        
-        $bagCarregDAO = new BagCarregDAO();
-        
-        if($versao >= 1.00){
-        
-            $dados = array("dados"=>$bagCarregDAO->dados($this->base));
-            $json_str = json_encode($dados);
+    public function dadosBagCarga() {
 
-            return $json_str;
-        
-        }
+        $bagDAO = new BagDAO();
+
+        $dados = array("dados"=>$bagDAO->dadosCarga());
+        $json_str = json_encode($dados);
+
+        return $json_str;
         
     }
     
-    public function dadosFunc($versao) {
-        
-        $versao = str_replace("_", ".", $versao);
-        
+    public function dadosFunc() {
+
         $funcDAO = new FuncDAO();
-        
-        if($versao >= 1.00){
-        
-            $dados = array("dados"=>$funcDAO->dados($this->base));
-            $json_str = json_encode($dados);
 
-            return $json_str;
-        
-        }
+        $dados = array("dados"=>$funcDAO->dados());
+        $json_str = json_encode($dados);
+
+        return $json_str;
         
     }
     
-    public function dadosOrdemCarreg($versao) {
-        
-        $versao = str_replace("_", ".", $versao);
-        
-        $atualOrdemCarregDAO = new AtualOrdemCarregDAO();
-        $ordemCarregDAO = new OrdemCarregDAO();
-        
-        if($versao >= 1.00){
-        
-            $atualOrdemCarregDAO->atualOrdemCarreg($this->baseApex);
-            $dados = array("dados"=>$ordemCarregDAO->dados($this->base));
-            $json_str = json_encode($dados);
+    public function dadosOrdemCarga() {
 
-            return $json_str;
-        
-        }
+        $atualOrdemCargaDAO = new AtualOrdemCargaDAO();
+        $ordemCargaDAO = new OrdemCargaDAO();
+
+        $atualOrdemCargaDAO->atualOrdemCarga();
+        $dados = array("dados"=>$ordemCargaDAO->dados());
+        $json_str = json_encode($dados);
+
+        return $json_str;
+
+    }
+    
+    public function dadosBagTransf($info) {
+
+        $bagDAO = new BagDAO();
+
+        $dados = array("dados"=>$bagDAO->dadosTransf($info['dado']));
+        $json_str = json_encode($dados);
+
+        return $json_str;
         
     }
+    
 }

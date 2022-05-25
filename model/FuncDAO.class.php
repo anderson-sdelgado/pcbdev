@@ -14,7 +14,7 @@ require_once('../dbutil/Conn.class.php');
 class FuncDAO extends Conn {
     //put your code here
     
-    public function dados($base) {
+    public function dados() {
 
         $select = " SELECT "
                     . " FUNC.FUNC_ID AS \"idFunc\" "
@@ -36,7 +36,7 @@ class FuncDAO extends Conn {
                     AND 
                     COLAB.COLAB_ID = DEM.COLAB_ID(+)";
         
-        $this->Conn = parent::getConn($base);
+        $this->Conn = parent::getConn();
         $this->Read = $this->Conn->prepare($select);
         $this->Read->setFetchMode(PDO::FETCH_ASSOC);
         $this->Read->execute();

@@ -11,32 +11,32 @@ require_once('../dbutil/Conn.class.php');
  *
  * @author anderson
  */
-class OrdemCarregDAO extends Conn {
+class OrdemCargaDAO extends Conn {
     //put your code here
     
-    public function dados($base) {
+    public function dados() {
 
         $select = " SELECT "
-                        . " VOC.ORDCARREG_ID AS \"idOrdemCarreg\" "
-                        . " , DECODE(VOC.DEST_EXP, 'SIM', 1, 2) AS \"destExpOrdemCarreg\" "
-                        . " , VOC.TICKET AS \"ticketOrdemCarreg\" "
-                        . " , VOC.PRODUTO AS \"produtoOrdemCarreg\" "
-                        . " , VOC.CLASSIF AS \"classifOrdemCarreg\" "
-                        . " , VOC.QT_EMBAL AS \"qtdeEmbProdOrdemCarreg\" "
-                        . " , VOC.PERIODPROD_ID AS \"idPeriodProdOrdemCarreg\" "
-                        . " , VOC.EMPRUSU_ID AS \"idEmprUsuOrdemCarreg\" "
-                        . " , VOC.DADOSPROD_ID AS \"idProdOrdemCarreg\" "
+                        . " VOC.ORDCARREG_ID AS \"idOrdemCarga\" "
+                        . " , DECODE(VOC.DEST_EXP, 'SIM', 1, 2) AS \"destExpOrdemCarga\" "
+                        . " , VOC.TICKET AS \"ticketOrdemCarga\" "
+                        . " , VOC.PRODUTO AS \"produtoOrdemCarga\" "
+                        . " , VOC.CLASSIF AS \"classifOrdemCarga\" "
+                        . " , VOC.QT_EMBAL AS \"qtdeEmbProdOrdemCarga\" "
+                        . " , VOC.PERIODPROD_ID AS \"idPeriodProdOrdemCarga\" "
+                        . " , VOC.EMPRUSU_ID AS \"idEmprUsuOrdemCarga\" "
+                        . " , VOC.DADOSPROD_ID AS \"idProdOrdemCarga\" "
                     . " FROM " 
-                        . " V_ORDEM_BAG_CARREGANDO VOC "
+                        . " USINAS.V_ORDEM_BAG_CARREGANDO VOC "
                     . " WHERE NOT EXISTS "
                             . " (SELECT "
                                     . " 1 "
                                 . " FROM "
-                                    . " LEITURA_BAG_OC LB "
+                                    . " USINAS.LEITURA_BAG_OC LB "
                                 . " WHERE"
                                     . " LB.ORDCARREG_ID = VOC.ORDCARREG_ID)";
         
-        $this->Conn = parent::getConn($base);
+        $this->Conn = parent::getConn();
         $this->Read = $this->Conn->prepare($select);
         $this->Read->setFetchMode(PDO::FETCH_ASSOC);
         $this->Read->execute();
