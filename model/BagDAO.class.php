@@ -14,9 +14,9 @@ require_once('../dbutil/Conn.class.php');
 class BagDAO extends Conn {
     //put your code here
     
-    public function dadosCarga() {
+    public function dadosCarga($codBarra) {
 
-        $select = "SELECT DISTINCT "
+        $select = " SELECT DISTINCT "
                         . " BC.REGMEDPES_ID AS \"idRegMedPesBag\" "
                         . " , BC.NRO_BAG AS \"nroBag\" "
                         . " , BC.CD_BARRA AS \"codBarraBag\" "
@@ -26,12 +26,14 @@ class BagDAO extends Conn {
                     . " FROM "
                         . " USINAS.V_BAG_CARREGAMENTO BC"
                         . " , USINAS.V_ORDEM_BAG_CARREGANDO OC "
-                    . " WHERE " 
+                    . " WHERE "
+                        . " BC.CD_BARRA LIKE '%" . $codBarra . "%'"
+                        . " AND " 
                         . " OC.PERIODPROD_ID = BC.PERIODPROD_ID "
                         . " AND "
-                        . " OC.DADOSPROD_ID = BC.DADOSPROD_ID "
+                        . " OC.DADOSPROD_ID = 4 "
                         . " AND "
-                        . " OC.EMPRUSU_ID = BC.EMPRUSU_ID ";
+                        . " OC.EMPRUSU_ID = 1 ";
         
         $this->Conn = parent::getConn();
         $this->Read = $this->Conn->prepare($select);

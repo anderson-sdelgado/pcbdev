@@ -16,11 +16,22 @@ require_once('../model/OrdemCargaDAO.class.php');
  */
 class BaseDadosCTR {
 
-    public function dadosBagCarga() {
+    public function dadosBagCarga($info) {
 
         $bagDAO = new BagDAO();
 
-        $dados = array("dados"=>$bagDAO->dadosCarga());
+        $dados = array("dados"=>$bagDAO->dadosCarga($info['dado']));
+        $json_str = json_encode($dados);
+
+        return $json_str;
+        
+    }
+    
+    public function dadosBagTransf($info) {
+
+        $bagDAO = new BagDAO();
+
+        $dados = array("dados"=>$bagDAO->dadosTransf($info['dado']));
         $json_str = json_encode($dados);
 
         return $json_str;
@@ -49,17 +60,6 @@ class BaseDadosCTR {
 
         return $json_str;
 
-    }
-    
-    public function dadosBagTransf($info) {
-
-        $bagDAO = new BagDAO();
-
-        $dados = array("dados"=>$bagDAO->dadosTransf($info['dado']));
-        $json_str = json_encode($dados);
-
-        return $json_str;
-        
     }
     
 }
