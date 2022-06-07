@@ -45,7 +45,7 @@ class BagDAO extends Conn {
         
     }
     
-    public function dadosTransf($codBarra) {
+    public function dadosTransf($codBarra, $idSafra) {
 
         $select = "SELECT DISTINCT "
                         . " B.REGMEDPES_ID AS \"idRegMedPesBag\" "
@@ -54,7 +54,13 @@ class BagDAO extends Conn {
                     . " FROM "
                         . " USINAS.V_BAG_ESTOQ B "
                     . " WHERE " 
-                        . " B.CD_BARRA LIKE '%" . $codBarra . "%'";
+                        . " B.CD_BARRA LIKE '%" . $codBarra . "%'"
+                        . " AND " 
+                        . " B.PERIODPROD_ID = " . $idSafra
+                        . " AND "
+                        . " B.DADOSPROD_ID = 4 "
+                        . " AND "
+                        . " B.EMPRUSU_ID = 1 ";
         
         $this->Conn = parent::getConn();
         $this->Read = $this->Conn->prepare($select);

@@ -9,6 +9,7 @@ require_once('../model/AtualOrdemCargaDAO.class.php');
 require_once('../model/BagDAO.class.php');
 require_once('../model/FuncDAO.class.php');
 require_once('../model/OrdemCargaDAO.class.php');
+require_once('../model/SafraDAO.class.php');
 /**
  * Description of BaseDadosCTR
  *
@@ -30,8 +31,11 @@ class BaseDadosCTR {
     public function dadosBagTransf($info) {
 
         $bagDAO = new BagDAO();
+        
+        $dados = $info['dado'];
+        $array = explode("_",$dados);
 
-        $dados = array("dados"=>$bagDAO->dadosTransf($info['dado']));
+        $dados = array("dados"=>$bagDAO->dadosTransf($array[0], $array[1]));
         $json_str = json_encode($dados);
 
         return $json_str;
@@ -60,6 +64,17 @@ class BaseDadosCTR {
 
         return $json_str;
 
+    }
+    
+    public function dadosSafra() {
+
+        $safraDAO = new SafraDAO();
+
+        $dados = array("dados"=>$safraDAO->dados());
+        $json_str = json_encode($dados);
+
+        return $json_str;
+        
     }
     
 }
