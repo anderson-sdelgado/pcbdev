@@ -17,12 +17,26 @@ class SafraDAO extends Conn {
         $select = " SELECT DISTINCT "
                     . " P.PERIODPROD_ID AS \"idSafra\" "
                     . " , P.NOME AS \"descrSafra\" "
-                    . " , TO_CHAR(P.DT_INIC, 'DD/MM/YYYY') AS \"dataInicioSafra\" "
+                    . " , DECODE(PMAX.PERIODPROD_ID, null, 0, 1) AS \"atualSafra\" "
                 . " FROM "
                     . " USINAS.V_BAG_ESTOQ B "
-                    . " , PERIOD_ATIV_PROD P "
+                    . " , USINAS.PERIOD_ATIV_PROD P "
+                    . " , (SELECT " 
+                            . " MAX(PERIODPROD_ID) AS PERIODPROD_ID "
+                      . " FROM "
+                            . " USINAS.PERIOD_ATIV_PROD "
+                      . " WHERE " 
+                            . " TP = 1 "
+                            . " AND "
+                            . " DT_INIC <= SYSDATE "
+                            . " AND "
+                            . " EMPRUSU_ID = 1 "
+                            . " AND " 
+                            . " NOME NOT LIKE '%SOJA%') PMAX "
                 . " WHERE "
-                    . " B.PERIODPROD_ID = P.PERIODPROD_ID ";
+                    . " B.PERIODPROD_ID = P.PERIODPROD_ID"
+                    . " AND "
+                    . " P.PERIODPROD_ID = PMAX.PERIODPROD_ID(+) ";
         
         $this->Conn = parent::getConn();
         $this->Read = $this->Conn->prepare($select);

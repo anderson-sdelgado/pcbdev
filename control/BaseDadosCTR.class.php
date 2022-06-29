@@ -17,25 +17,50 @@ require_once('../model/SafraDAO.class.php');
  */
 class BaseDadosCTR {
 
-    public function dadosBagCarga($info) {
+    public function dadosBagCargaCod($info) {
 
         $bagDAO = new BagDAO();
 
-        $dados = array("dados"=>$bagDAO->dadosCarga($info['dado']));
+        $dados = array("dados"=>$bagDAO->dadosCargaCod($info['dado']));
         $json_str = json_encode($dados);
 
         return $json_str;
         
     }
     
-    public function dadosBagTransf($info) {
+    public function dadosBagCargaNro($info) {
+
+        $bagDAO = new BagDAO();
+
+        $dados = array("dados"=>$bagDAO->dadosCargaNro($info['dado']));
+        $json_str = json_encode($dados);
+
+        return $json_str;
+        
+    }
+    
+    public function dadosBagTransfCod($info) {
 
         $bagDAO = new BagDAO();
         
         $dados = $info['dado'];
         $array = explode("_",$dados);
 
-        $dados = array("dados"=>$bagDAO->dadosTransf($array[0], $array[1]));
+        $dados = array("dados"=>$bagDAO->dadosTransfCod($array[0], $array[1]));
+        $json_str = json_encode($dados);
+
+        return $json_str;
+        
+    }
+    
+    public function dadosBagTransfNro($info) {
+
+        $bagDAO = new BagDAO();
+        
+        $dados = $info['dado'];
+        $array = explode("_",$dados);
+
+        $dados = array("dados"=>$bagDAO->dadosTransfNro($array[0], $array[1]));
         $json_str = json_encode($dados);
 
         return $json_str;
