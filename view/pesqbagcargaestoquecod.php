@@ -7,6 +7,6 @@ require_once('../control/BaseDadosCTR.class.php');
 if (isset($info)):
 
    $baseDadosCTR = new BaseDadosCTR();
-   echo $baseDadosCTR->dadosBagCargaCod($info);
+   echo $baseDadosCTR->dadosBagCargaEstoqueCod($info);
 
 endif;

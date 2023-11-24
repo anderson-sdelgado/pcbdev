@@ -64,19 +64,21 @@ class CabecCargaDAO extends Conn {
     public function insCabecAberto($cabec) {
 
         $sql = "INSERT INTO USINAS.LEITURA_BAG_OC ("
-                    . " ORDCARREG_ID "
-                    . " , FUNC_ID "
-                    . " , DT_HR "
-                    . " , CEL_ID "
-                    . " , STATUS "
-                    . " ) "
-                    . " VALUES ("
-                    . " " . $cabec->idOrdemCabecCarga
-                    . " , " . $cabec->idFuncCabecCarga
-                    . " , TO_DATE('" . $cabec->dthrCabecCarga . "','DD/MM/YYYY HH24:MI')"
-                    . " , " . $cabec->idCabecCarga
-                    . " , 1 "
-                    . " )";
+                            . " ORDCARREG_ID "
+                            . " , FUNC_ID "
+                            . " , DT_HR "
+                            . " , CEL_ID "
+                            . " , STATUS "
+                            . " , DIRETO_PROD "
+                        . " ) "
+                        . " VALUES ("
+                            . " " . $cabec->idOrdemCabecCarga
+                            . " , " . $cabec->idFuncCabecCarga
+                            . " , TO_DATE('" . $cabec->dthrCabecCarga . "','DD/MM/YYYY HH24:MI')"
+                            . " , " . $cabec->idCabecCarga
+                            . " , 1 "
+                            . " , " . $cabec->tipoCabecCarga
+                        . " )";
 
         $this->Conn = parent::getConn();
         $this->Create = $this->Conn->prepare($sql);
@@ -86,19 +88,21 @@ class CabecCargaDAO extends Conn {
     public function insCabecFechado($cabec) {
 
         $sql = "INSERT INTO USINAS.LEITURA_BAG_OC ("
-                    . " ORDCARREG_ID "
-                    . " , FUNC_ID "
-                    . " , DT_HR "
-                    . " , CEL_ID "
-                    . " , STATUS "
-                    . " ) "
-                    . " VALUES ("
-                    . " " . $cabec->idOrdemCabecCarga
-                    . " , " . $cabec->idFuncCabecCarga
-                    . " , TO_DATE('" . $cabec->dthrCabecCarga . "','DD/MM/YYYY HH24:MI')"
-                    . " , " . $cabec->idCabecCarga
-                    . " , 2 "
-                    . " )";
+                            . " ORDCARREG_ID "
+                            . " , FUNC_ID "
+                            . " , DT_HR "
+                            . " , CEL_ID "
+                            . " , STATUS "
+                            . " , DIRETO_PROD "
+                        . " ) "
+                        . " VALUES ("
+                            . " " . $cabec->idOrdemCabecCarga
+                            . " , " . $cabec->idFuncCabecCarga
+                            . " , TO_DATE('" . $cabec->dthrCabecCarga . "','DD/MM/YYYY HH24:MI')"
+                            . " , " . $cabec->idCabecCarga
+                            . " , 2 "
+                            . " , " . $cabec->tipoCabecCarga
+                        . " )";
 
         $this->Conn = parent::getConn();
         $this->Create = $this->Conn->prepare($sql);
@@ -108,10 +112,10 @@ class CabecCargaDAO extends Conn {
     public function updateCabecFechado($idCabecBD) {
 
         $sql = "UPDATE USINAS.LEITURA_BAG_OC "
-                    . " SET "
-                    . " STATUS = 2 "
-                    . " WHERE "
-                    . " LEIBGOC_ID = " . $idCabecBD;
+                        . " SET "
+                        . " STATUS = 2 "
+                        . " WHERE "
+                        . " LEIBGOC_ID = " . $idCabecBD;
 
         $this->Conn = parent::getConn();
         $this->Create = $this->Conn->prepare($sql);

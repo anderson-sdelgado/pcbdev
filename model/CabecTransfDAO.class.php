@@ -63,19 +63,19 @@ class CabecTransfDAO extends Conn {
     public function insCabecAberto($cabec) {
 
         $sql = "INSERT INTO USINAS.LEITURA_BAG_TRANSF ("
-                    . " FUNC_ID "
-                    . " , DT_HR "
-                    . " , CEL_ID "
-                    . " , STATUS "
-                    . " , DADOSPROD_ID "
-                    . " ) "
-                    . " VALUES ("
-                    . " " . $cabec->idFuncCabecTransf
-                    . " , TO_DATE('" . $cabec->dthrCabecTransf . "','DD/MM/YYYY HH24:MI')"
-                    . " , " . $cabec->idCabecTransf
-                    . " , 1 "
-                    . " , 4 "
-                    . " )";
+                            . " FUNC_ID "
+                            . " , DT_HR "
+                            . " , CEL_ID "
+                            . " , STATUS "
+                            . " , DADOSPROD_ID "
+                        . " ) "
+                        . " VALUES ("
+                            . " " . $cabec->idFuncCabecTransf
+                            . " , TO_DATE('" . $cabec->dthrCabecTransf . "','DD/MM/YYYY HH24:MI')"
+                            . " , " . $cabec->idCabecTransf
+                            . " , 1 "
+                            . " , 4 "
+                        . " )";
 
         $this->Conn = parent::getConn();
         $this->Create = $this->Conn->prepare($sql);
@@ -85,19 +85,19 @@ class CabecTransfDAO extends Conn {
     public function insCabecFechado($cabec) {
 
         $sql = "INSERT INTO USINAS.LEITURA_BAG_TRANSF ("
-                    . " FUNC_ID "
-                    . " , DT_HR "
-                    . " , CEL_ID "
-                    . " , STATUS "
-                    . " , DADOSPROD_ID "
-                    . " ) "
-                    . " VALUES ("
-                    . " " . $cabec->idFuncCabecTransf
-                    . " , TO_DATE('" . $cabec->dthrCabecTransf . "','DD/MM/YYYY HH24:MI')"
-                    . " , " . $cabec->idCabecTransf
-                    . " , 2 "
-                    . " , 4 "
-                    . " )";
+                            . " FUNC_ID "
+                            . " , DT_HR "
+                            . " , CEL_ID "
+                            . " , STATUS "
+                            . " , DADOSPROD_ID "
+                        . " ) "
+                        . " VALUES ("
+                            . " " . $cabec->idFuncCabecTransf
+                            . " , TO_DATE('" . $cabec->dthrCabecTransf . "','DD/MM/YYYY HH24:MI')"
+                            . " , " . $cabec->idCabecTransf
+                            . " , 2 "
+                            . " , 4 "
+                        . " )";
 
         $this->Conn = parent::getConn();
         $this->Create = $this->Conn->prepare($sql);
@@ -107,10 +107,10 @@ class CabecTransfDAO extends Conn {
     public function updateCabecFechado($idCabecBD) {
 
         $sql = "UPDATE USINAS.LEITURA_BAG_TRANSF "
-                    . " SET "
-                    . " STATUS = 2 "
-                    . " WHERE "
-                    . " LEIBTRANSF_ID = " . $idCabecBD;
+                        . " SET "
+                        . " STATUS = 2 "
+                        . " WHERE "
+                        . " LEIBTRANSF_ID = " . $idCabecBD;
 
         $this->Conn = parent::getConn();
         $this->Create = $this->Conn->prepare($sql);

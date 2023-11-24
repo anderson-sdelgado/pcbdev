@@ -17,24 +17,46 @@ require_once('../model/SafraDAO.class.php');
  */
 class BaseDadosCTR {
 
-    public function dadosBagCargaCod($info) {
+    public function dadosBagCargaEstoqueCod($info) {
 
         $bagDAO = new BagDAO();
 
-        $dados = array("dados"=>$bagDAO->dadosCargaCod($info['dado']));
+        $dados = array("dados"=>$bagDAO->dadosCargaEstoqueCod($info['dado']));
         $json_str = json_encode($dados);
 
         return $json_str;
         
     }
     
-    public function dadosBagCargaNro($info) {
+    public function dadosBagCargaEstoqueNro($info) {
 
         $bagDAO = new BagDAO();
 
-        $dados = array("dados"=>$bagDAO->dadosCargaNro($info['dado']));
+        $dados = array("dados"=>$bagDAO->dadosCargaEstoqueNro($info['dado']));
         $json_str = json_encode($dados);
 
+        return $json_str;
+        
+    }
+    
+    public function dadosBagCargaProducaoCod($info) {
+
+        $bagDAO = new BagDAO();
+
+        $dados = array("dados"=>$bagDAO->dadosCargaProducaoCod($info['dado']));
+        $json_str = json_encode($dados);
+
+        return $json_str;
+        
+    }
+    
+    public function dadosBagCargaProducaoNro($info) {
+
+        $bagDAO = new BagDAO();
+
+        $dados = array("dados"=>$bagDAO->dadosCargaProducaoNro($info['dado']));
+        $json_str = json_encode($dados);
+        
         return $json_str;
         
     }

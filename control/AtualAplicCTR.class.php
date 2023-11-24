@@ -13,8 +13,6 @@ require_once('../model/AtualAplicDAO.class.php');
  */
 class AtualAplicCTR {
     //put your code here
-
-    private $base = 2;
     
     public function atualAplic($info) {
 
@@ -24,40 +22,83 @@ class AtualAplicCTR {
         $dados = $jsonObj->dados;
 
         foreach ($dados as $d) {
-            $nroAparelho = $d->nroAparelhoAtual;
-            $versaoAtual = $d->versaoAtual;
+            $nroAparelho = $d->nroAparelho;
+            $token = $d->token;
         }
 
         $retAtualApp = 0;
-
-        $v = $atualAplicDAO->verAtual($nroAparelho, $this->base);
-        if ($v == 0) {
-            $atualAplicDAO->insAtual($nroAparelho, $versaoAtual, $this->base);
-        } else {
-            $result = $atualAplicDAO->retAtual($nroAparelho, $this->base);
-            foreach ($result as $item) {
-                $versaoNova = $item['VERSAO_NOVA'];
-                $versaoAtualBD = $item['VERSAO_ATUAL'];
-            }
-            if ($versaoAtual != $versaoAtualBD) {
-                $atualAplicDAO->updAtualNova($nroAparelho, $versaoAtual, $this->base);
-            } else {
-                if ($versaoAtual != $versaoNova) {
-                    $retAtualApp = 1;
-                } else {
-                    if (strcmp($versaoAtual, $versaoAtualBD) <> 0) {
-                        $atualAplicDAO->updAtual($nroAparelho, $versaoAtual, $this->base);
-                    }
-                }
-            }
+        
+        $v = $atualAplicDAO->verToken($token);
+        
+        if ($v > 0) {
+            
+            $atualAplicDAO->updUltAcesso($nroAparelho);
+            $dthr = $atualAplicDAO->dataHora();
+            $dado = array("flagAtualApp" => $retAtualApp, "dthr" => $dthr);
+            return json_encode(array("dados"=>array($dado)));
+        
         }
-        $dthr = $atualAplicDAO->dataHora($this->base);
-
-        $dado = array("flagAtualApp" => $retAtualApp
-            , "dthr" => $dthr);
-
-        return json_encode(array("dados" => array($dado)));
 
     }
     
+    public function inserirDados($info){
+        
+        $jsonObj = json_decode($info['dado']);
+        $dados = $jsonObj->dados;
+
+        foreach ($dados as $d) {
+            $nroAparelho = $d->nroAparelho;
+            $versao = $d->versao;
+        }
+        
+        return $this->inserirAtualVersao($nroAparelho, $versao);
+        
+    }
+    
+    public function inserirAtualVersao($nroAparelho, $versao) {
+        $atualAplicDAO = new AtualAplicDAO();
+        $v = $atualAplicDAO->verAtual($nroAparelho);
+        if ($v == 0) {
+            $atualAplicDAO->insAtual($nroAparelho, $versao);
+        } else {
+            $atualAplicDAO->updAtual($nroAparelho, $versao);
+        }
+        $dado = array("nroAparelho" => $nroAparelho);
+        return json_encode(array("dados" =>array($dado)));
+    }
+
+    public function verifToken($info){
+        
+        $jsonObj = json_decode($info['dado']);
+        $dados = $jsonObj->dados;
+
+        foreach ($dados as $d) {
+            $token = $d->token;
+        }
+        
+        $atualAplicDAO = new AtualAplicDAO();
+        $v = $atualAplicDAO->verToken($token);
+        
+        if ($v > 0) {
+            return true;
+        } else {
+            return false;
+        }
+        
+    }
+    
+    public function verToken($headers){
+        
+        $token = trim(substr($headers['Authorization'], 6));
+        $atualAplicDAO = new AtualAplicDAO();
+        $v = $atualAplicDAO->verToken($token);
+        
+        if ($v > 0) {
+            return true;
+        } else {
+            return false;
+        }
+        
+    }
+
 }

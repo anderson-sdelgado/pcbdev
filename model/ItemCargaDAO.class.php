@@ -16,13 +16,13 @@ class ItemCargaDAO extends Conn {
     public function verifItem($idCabec, $item) {
 
         $select = " SELECT "
-                    . " COUNT(*) AS QTDE "
-                . " FROM "
-                    . " USINAS.LEITURA_BAG_OC_ITEM "
-                . " WHERE "
-                    . " CEL_ID = " . $item->idItemCarga
-                    . " AND "
-                    . " LEIBGOC_ID = " . $idCabec;
+                        . " COUNT(*) AS QTDE "
+                    . " FROM "
+                        . " USINAS.LEITURA_BAG_OC_ITEM "
+                    . " WHERE "
+                        . " CEL_ID = " . $item->idItemCarga
+                        . " AND "
+                        . " LEIBGOC_ID = " . $idCabec;
 
         $this->Conn = parent::getConn();
         $this->Read = $this->Conn->prepare($select);
@@ -40,15 +40,15 @@ class ItemCargaDAO extends Conn {
     public function insItem($idCabecBD, $item) {
         
         $sql = "INSERT INTO USINAS.LEITURA_BAG_OC_ITEM ("
-                . " LEIBGOC_ID "
-                . " , REGMEDPES_ID "
-                . " , CEL_ID "
-                . " ) "
-                . " VALUES ("
-                . " " . $idCabecBD
-                . " , " . $item->idRegMedPesBagCarga
-                . " , " . $item->idItemCarga
-                . " )";
+                        . " LEIBGOC_ID "
+                        . " , REGMEDPES_ID "
+                        . " , CEL_ID "
+                    . " ) "
+                    . " VALUES ("
+                        . " " . $idCabecBD
+                        . " , " . $item->idRegMedPesBagCarga
+                        . " , " . $item->idItemCarga
+                    . " )";
 
         $this->Conn = parent::getConn();
         $this->Create = $this->Conn->prepare($sql);

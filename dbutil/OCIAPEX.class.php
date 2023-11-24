@@ -1,14 +1,19 @@
 <?php
 
-/**
- * Conn.class [ CONEXÃO ]
- * Classe abstrata de conexão. Padrão SingleTon.
- * Retorna um objeto PDO pelo método estático getConn();
- * 
- * @copyright (c) 2013, Robson V. Leite UPINSIDE TECNOLOGIA
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
-class ConnAPEX {
 
+/**
+ * Description of OCI
+ *
+ * @author anderson
+ */
+class OCIAPEX {
+    //put your code here
+    
     /** @var PDO */
     private static $Connect = null;
 
@@ -20,6 +25,7 @@ class ConnAPEX {
         try {
 
             if (self::$Connect == null) {
+
                 $tns = "(DESCRIPTION =
                             (ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.2.10)(PORT = 1521))
                             (CONNECT_DATA =
@@ -28,20 +34,19 @@ class ConnAPEX {
                             )
                           )";
 
-                self::$Connect = new PDO("oci:dbname=" . $tns . ';charset=utf8', 'STAFE', 'STA1553');
+                self::$Connect = oci_connect('STAFE', 'STA1553', $tns, 'AL32UTF8');
+                
             }
         } catch (PDOException $e) {
             PHPErro($e->getCode(), $e->getMessage(), $e->getFile(), $e->getLine());
             die;
         }
 
-        self::$Connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         return self::$Connect;
     }
 
     protected static function getConn() {
         return self::Conectar();
     }
-
+    
 }
-
