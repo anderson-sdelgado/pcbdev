@@ -7,6 +7,6 @@ require_once('../control/BaseDadosCTR.class.php');
 if (isset($info)):
 
     $baseDadosCTR = new BaseDadosCTR();
-    echo $baseDadosCTR->dadosSafra();
+    echo $baseDadosCTR->dadosSafra($info);
 
 endif;

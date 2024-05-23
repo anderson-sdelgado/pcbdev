@@ -5,6 +5,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+require_once('../control/AtualAplicCTR.class.php');
 require_once('../model/AtualOrdemCargaDAO.class.php');
 require_once('../model/BagDAO.class.php');
 require_once('../model/FuncDAO.class.php');
@@ -89,39 +90,51 @@ class BaseDadosCTR {
         
     }
     
-    public function dadosFunc() {
+    public function dadosFunc($info) {
 
         $funcDAO = new FuncDAO();
-
-        $dados = array("dados"=>$funcDAO->dados());
-        $json_str = json_encode($dados);
-
-        return $json_str;
         
+        if($atualAplicCTR->verifToken($info)){
+            
+        	$dados = array("dados"=>$funcDAO->dados());
+        	$json_str = json_encode($dados);
+
+        	return $json_str;
+                
+        }
+
     }
     
-    public function dadosOrdemCarga() {
+    public function dadosOrdemCarga($info) {
 
         $atualOrdemCargaDAO = new AtualOrdemCargaDAO();
         $ordemCargaDAO = new OrdemCargaDAO();
+        
+        if($atualAplicCTR->verifToken($info)){
+            
+        	$atualOrdemCargaDAO->atualOrdemCarga();
+        	$dados = array("dados"=>$ordemCargaDAO->dados());
+        	$json_str = json_encode($dados);
 
-        $atualOrdemCargaDAO->atualOrdemCarga();
-        $dados = array("dados"=>$ordemCargaDAO->dados());
-        $json_str = json_encode($dados);
-
-        return $json_str;
+        	return $json_str;
+                
+        }
 
     }
     
-    public function dadosSafra() {
+    public function dadosSafra($info) {
 
         $safraDAO = new SafraDAO();
-
-        $dados = array("dados"=>$safraDAO->dados());
-        $json_str = json_encode($dados);
-
-        return $json_str;
         
+        if($atualAplicCTR->verifToken($info)){
+            
+        	$dados = array("dados"=>$safraDAO->dados());
+        	$json_str = json_encode($dados);
+
+        	return $json_str;
+                        
+        }
+
     }
     
 }
